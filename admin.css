@@ -33,11 +33,16 @@
   --color-info:           #06b6d4;
   --color-info-light:     #cffafe;
 
-  /* Sidebar */
-  --sidebar-bg:           #1c2434;
-  --sidebar-text:         #aeb7c4;
-  --sidebar-text-active:  #ffffff;
-  --sidebar-width:        260px;
+  /* Sidebar (TailAdmin-style light nav) */
+  --sidebar-bg:             #f9fafb;
+  --sidebar-border:       #e8ecf1;
+  --sidebar-text:         #1c2434;
+  --sidebar-text-muted:   #64748b;
+  --sidebar-nav-primary:  #3c50e0;
+  --sidebar-active-bg:    #eff4ff;
+  --sidebar-hover-bg:     #f1f5f9;
+  --sidebar-mark-bg:      #3c50e0;
+  --sidebar-width:        272px;
 
   /* Layout */
   --header-height:        64px;
@@ -120,6 +125,7 @@ input, textarea, select {
   width: var(--sidebar-width);
   min-height: 100vh;
   background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -134,33 +140,75 @@ input, textarea, select {
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-6) var(--space-5);
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  color: var(--sidebar-text-active);
+  border-bottom: 1px solid var(--sidebar-border);
+  color: var(--sidebar-text);
+  text-decoration: none;
   font-size: var(--font-size-lg);
   font-weight: 700;
   letter-spacing: -0.02em;
+  transition: background var(--transition);
+}
+
+.sidebar-logo:hover {
+  background: var(--sidebar-hover-bg);
+}
+
+.sidebar-logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--sidebar-mark-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(60, 80, 224, 0.2);
+}
+
+.sidebar-logo-mark svg {
+  width: 22px;
+  height: 22px;
+}
+
+.sidebar-brand-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--sidebar-text);
+  line-height: 1.2;
+}
+
+.sidebar-brand-sub {
+  font-size: 0.68rem;
+  color: var(--sidebar-text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+  line-height: 1.2;
 }
 
 .sidebar-logo img { width: 32px; height: 32px; border-radius: var(--radius-md); }
 
-.sidebar-nav { flex: 1; padding: var(--space-4) 0; overflow-y: auto; }
+.sidebar-nav { flex: 1; padding: var(--space-4) var(--space-3) var(--space-6); overflow-y: auto; }
 
 .sidebar-section-title {
-  padding: var(--space-3) var(--space-5) var(--space-2);
-  font-size: 0.7rem;
+  padding: var(--space-5) var(--space-4) var(--space-2);
+  font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--color-gray-500);
+  letter-spacing: 0.1em;
+  color: var(--sidebar-text-muted);
+}
+
+.sidebar-section-title:first-child {
+  padding-top: var(--space-2);
 }
 
 .sidebar-item {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-2) var(--space-5);
-  margin: 1px var(--space-3);
-  border-radius: var(--radius-md);
+  gap: 12px;
+  padding: 10px 14px;
+  margin: 2px 0;
+  border-radius: var(--radius-full);
   color: var(--sidebar-text);
   font-size: var(--font-size-sm);
   font-weight: 500;
@@ -168,16 +216,25 @@ input, textarea, select {
 }
 
 .sidebar-item:hover {
-  background: rgba(255,255,255,.07);
-  color: var(--sidebar-text-active);
+  background: var(--sidebar-hover-bg);
+  color: var(--sidebar-text);
 }
 
 .sidebar-item.active {
-  background: var(--color-primary);
-  color: var(--sidebar-text-active);
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-nav-primary);
+  font-weight: 600;
 }
 
-.sidebar-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.sidebar-item-icon {
+  font-size: 17px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 22px;
+  text-align: center;
+}
+
+.sidebar-item svg { width: 18px; height: 18px; flex-shrink: 0; color: currentColor; }
 
 .sidebar-item .badge {
   margin-left: auto;
@@ -1000,8 +1057,8 @@ select.form-control { appearance: none; }
   :root { --sidebar-width: 0px; }
 
   .sidebar {
-    transform: translateX(-260px);
-    width: 260px;
+    transform: translateX(-100%);
+    width: min(272px, 88vw);
   }
 
   .sidebar.open {

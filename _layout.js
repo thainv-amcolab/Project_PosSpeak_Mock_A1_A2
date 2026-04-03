@@ -55,7 +55,7 @@ function buildSidebar(activeId) {
       const isActive = item.id === activeId;
       return `
         <a href="${item.href}" class="sidebar-item${isActive ? ' active' : ''}">
-          <span style="font-size:16px;line-height:1">${item.emoji}</span>
+          <span class="sidebar-item-icon" aria-hidden="true">${item.emoji}</span>
           <span>${item.label}</span>
         </a>`;
     }).join('');
@@ -65,13 +65,15 @@ function buildSidebar(activeId) {
       ${itemsHtml}`;
   }).join('');
 
+  const logoBars = `<svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="11" width="4" height="8" rx="1" fill="#fff"/><rect x="9" y="7" width="4" height="12" rx="1" fill="#fff"/><rect x="15" y="3" width="4" height="16" rx="1" fill="#fff"/></svg>`;
+
   return `
     <aside class="sidebar" id="sidebar">
       <a href="index.html" class="sidebar-logo">
-        <div style="width:36px;height:36px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;flex-shrink:0">AO</div>
+        <div class="sidebar-logo-mark">${logoBars}</div>
         <div>
-          <div style="font-size:0.8rem;font-weight:700;color:#fff;line-height:1.2">AI ORDER ADMIN</div>
-          <div style="font-size:0.65rem;color:#9ca3af;font-weight:400">統合バックオフィス</div>
+          <div class="sidebar-brand-title">AI ORDER ADMIN</div>
+          <div class="sidebar-brand-sub">統合バックオフィス</div>
         </div>
       </a>
       <nav class="sidebar-nav">${navHtml}</nav>
